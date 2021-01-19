@@ -1,0 +1,23 @@
+<h1 mat-dialog-title align="center">Convert this task to subtask of: </h1>
+
+<form [formGroup]="formGroup">
+  <mat-form-field appearance="fill">
+    <mat-label>Select a task</mat-label>
+    <input matInput
+           [matAutocomplete]="auto"
+           formControlName="task">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let item of filteredTasks | async" [value]="item">
+        <span>{{item.key}}</span> |
+        <small>({{item.summary}})</small>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-dialog-actions align="center">
+    <button mat-raised-button type="submit" [mat-dialog-close]="formGroup.value.task.id">Submit</button>
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+  </mat-dialog-actions>
+</form>
+
+

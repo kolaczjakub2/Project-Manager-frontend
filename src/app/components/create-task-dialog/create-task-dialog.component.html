@@ -1,0 +1,57 @@
+<h1 mat-dialog-title align="center">Create Task</h1>
+
+<form [formGroup]="formGroup">
+  <mat-form-field appearance="fill" *ngIf="!data.subtask">
+    <mat-label>Select a project</mat-label>
+    <input matInput
+           [matAutocomplete]="auto"
+           formControlName="projectId">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onProjectChange($event)">
+      <mat-option *ngFor="let item of filteredProjects | async" [value]="item">
+        <span>{{item.name}}</span> |
+        <small>({{item.code}})</small>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Select a releaseId</mat-label>
+    <mat-select formControlName="releaseId">
+      <mat-option [matTooltip]="item.description" *ngFor="let item of data.releases; index as i;"
+                  [value]="item.id">{{item.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Summary</mat-label>
+    <input matInput placeholder="Description" formControlName="summary">
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <app-select [form]="formGroup" [values]="priorities" [placeholder]="'Priority'"
+              [controlName]="'priority'"></app-select>
+
+  <app-select [form]="formGroup" [values]="types" [placeholder]="'Type'"
+              [controlName]="'taskType'"></app-select>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>Estimated time</mat-label>
+    <input matInput placeholder="Estimated time (e.g.4d 5h 30m)" formControlName="estimatedTime">
+  </mat-form-field>
+
+  <mat-label><a>Assign to default user</a></mat-label>
+  <app-select [form]="formGroup" [values]="data.users" [placeholder]="'Select a assignee'"
+              [controlName]="'assigneeId'" [valueField]="'id'" [type]="'user'"></app-select>
+
+  <mat-dialog-actions align="center">
+    <button mat-raised-button type="submit" [mat-dialog-close]="formGroup.value">Submit</button>
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+  </mat-dialog-actions>
+</form>

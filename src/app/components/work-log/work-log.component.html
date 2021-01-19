@@ -1,0 +1,21 @@
+<mat-card
+  style="border: 1px solid;  margin: 2%;   box-shadow: 5px 10px 8px #888888;">
+  <mat-card-title style="padding:1%;">{{getWorkLogCreator(workLog.creatorId)}} -
+    <small> logged work at {{getCreatedDate(workLog.createdDate)}}</small>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+
+    <p style="padding-left: 5%;">
+      Time spend: {{workLog.worked}}
+    </p>
+
+    <p style="padding-left: 5%;">
+      Date: {{workLog.date}}, From: {{workLog.from}} To: {{workLog.to}}
+    </p>
+
+    <p style="padding: 1% 1% 1% 5%;">
+      {{workLog.comment}}
+    </p>
+  </mat-card-content>
+</mat-card>

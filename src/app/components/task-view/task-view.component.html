@@ -1,0 +1,129 @@
+<mat-card *ngIf="task" style="margin: 3%">
+  <form [formGroup]="formGroup">
+    <h3>{{task.mainTaskKey}}</h3>/
+    <h3>{{task.key}}</h3>
+    <h1 (dblclick)="onLabelClick('summary')"
+        *ngIf="summary=='LABEL'">{{this.formGroup.get('summary').value}}</h1>
+
+    <mat-form-field appearance="fill" *ngIf="summary=='TEXTAREA'">
+      <mat-label>Summary</mat-label>
+      <input matInput formControlName="summary" (blur)="onInputBlur('summary')">
+    </mat-form-field>
+
+    <div class="row" style="margin-left: 5%">
+      <app-task-actions (commentClick)="onCommentClick()" [task]="this.task"
+                        (logTimeSubmit)="logTimeSubmit($event)"
+                        (statusEmitter)="changeStatus($event)"></app-task-actions>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>Details</mat-expansion-panel-header>
+          <div class="row">
+            <app-select style="width:50%" [form]="formGroup" [values]="types" [placeholder]="'Type'"
+                        [controlName]="'type'" (clicked)="enableField($event)"
+                        (onBlur)="disableField($event)" (onChanged)="updateTask($event)"></app-select>
+
+            <app-select style="width:50%" [form]="formGroup" [values]="priorities" [placeholder]="'Priority'"
+                        [controlName]="'priority'" (clicked)="enableField($event)"
+                        (onBlur)="disableField($event)" (onChanged)="updateTask($event)"></app-select>
+          </div>
+          <div class="row">
+
+            <app-select style="width:50%" [form]="formGroup" [values]="statuses" [placeholder]="'Status'"
+                        [controlName]="'status'"></app-select>
+
+
+            <app-select style="width:50%" [form]="formGroup" [values]="resolution" [placeholder]="'Resolution'"
+                        [controlName]="'resolution'"></app-select>
+
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <div class="col-sm">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>People</mat-expansion-panel-header>
+
+          <app-select [form]="formGroup" [values]="users" [placeholder]="'Assignee'"
+                      [controlName]="'assigneeId'" [valueField]="'id'" [type]="'user'"
+                      (clicked)="enableField($event)" (onChanged)="updateTask($event)"
+                      (onBlur)="disableField($event)"></app-select>
+
+          <app-select [form]="formGroup" [values]="users" [placeholder]="'Creator'"
+                      [controlName]="'creatorId'" [valueField]="'id'" [type]="'user'"></app-select>
+        </mat-expansion-panel>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>Description</mat-expansion-panel-header>
+          <p (dblclick)="onLabelClick('description')"
+             *ngIf="description=='LABEL'">{{this.formGroup.get('description').value}}</p>
+
+          <mat-form-field appearance="fill" *ngIf="description=='TEXTAREA'">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" cdkTextareaAutosize
+                      style="overflow: hidden;" (blur)="onInputBlur('description')"
+            ></textarea>
+          </mat-form-field>
+        </mat-expansion-panel>
+      </div>
+      <div class="col-sm">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>Dates</mat-expansion-panel-header>
+          <mat-form-field appearance="fill">
+            <mat-label>Created Date</mat-label>
+            <input matInput placeholder="Created Date" formControlName="createdDate">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Last Modified Date</mat-label>
+            <input matInput placeholder="Last Modified Date" formControlName="lastModifiedDate">
+          </mat-form-field>
+          <section>
+            Time Tracking
+          </section>
+          <mat-label>Estimated time:</mat-label>
+          {{task.estimatedTime}}
+          <mat-progress-bar [value]="estimatedTime"></mat-progress-bar>
+
+          <div>
+            <mat-label>Logged time:</mat-label>
+            {{task.loggedTime}}
+            <mat-progress-bar [ngClass]="{'redLogged' :loggedTime > estimatedTime}" class="logged"
+                              [value]="loggedTime"></mat-progress-bar>
+          </div>
+
+        </mat-expansion-panel>
+      </div>
+    </div>
+
+
+
+          <app-sub-task-view [task]="task" [users]="users"></app-sub-task-view>
+
+
+
+    <div class="col-sm">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>Attachments</mat-expansion-panel-header>
+      </mat-expansion-panel>
+    </div>
+    <div class="col-sm">
+    </div>
+  </form>
+
+
+  <mat-card style="min-height: 500px">
+    <mat-tab-group mat-align-tabs="start">
+      <mat-tab label="Comments">
+        <app-comment-tab-view [taskKey]="taskKey" [users]="users"
+                              [events]="eventsSubject.asObservable()"></app-comment-tab-view>
+      </mat-tab>
+      <mat-tab label="Work log">
+        <app-work-log-tab-view [taskKey]="taskKey" [users]="users"></app-work-log-tab-view>
+      </mat-tab>
+      <mat-tab label="Third">Content 3</mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</mat-card>

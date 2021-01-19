@@ -1,0 +1,11 @@
+<div *ngIf="tasks">
+  <div class="row" *ngIf="tasks.length >0">
+    <div class="col-sm">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>Sub Task</mat-expansion-panel-header>
+
+        <app-list [data]="tasks" [displayedColumns]="displayedColumns" (onClick)="onClickRow($event)"></app-list>
+      </mat-expansion-panel>
+    </div>
+  </div>
+</div>

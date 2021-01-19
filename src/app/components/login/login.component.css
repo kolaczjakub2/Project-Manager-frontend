@@ -1,0 +1,21 @@
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -15vh;
+  margin-left: -15vw;
+  width: 30vw;
+  border: 3px solid #000
+}
+
+
+mat-form-field{
+  width:100%;
+  padding-top: 1vh;
+  padding-bottom: 0.5vh;
+}
+
+button{
+  width:50%;
+  display: block; margin: 0 auto;
+}

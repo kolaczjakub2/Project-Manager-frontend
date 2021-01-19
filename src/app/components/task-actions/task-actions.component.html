@@ -1,0 +1,34 @@
+<button mat-raised-button>Edit</button>
+<button mat-raised-button (click)="onCommentClick()">Comment</button>
+<button mat-raised-button>Assign</button>
+<button mat-raised-button [matMenuTriggerFor]="moreMenu">More <span class="material-icons">add</span></button>
+<mat-menu #moreMenu="matMenu">
+  <button mat-menu-item (click)="logWork()" *ngIf="task.status !='CLOSED'">Log Work</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>Agile Board</button>
+  <button mat-menu-item>Rank to Top</button>
+  <button mat-menu-item>Rank to Bottom</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>Attach Files</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>Add vote</button>
+  <button mat-menu-item>Voters</button>
+  <button mat-menu-item>Watch task</button>
+  <button mat-menu-item>Watchers</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="createSubTask()">Create sub-task</button>
+  <button mat-menu-item (click)="convertToSubTask()">Convert to sub-task</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>Move</button>
+  <button mat-menu-item>Link</button>
+  <button mat-menu-item>Clone</button>
+  <button mat-menu-item>Labels</button>
+</mat-menu>
+<button mat-raised-button *ngIf="task.status =='OPEN' ||  task.status =='REOPEN'" (click)="changeStatus('IN_PROGRESS')">
+  Start progress
+</button>
+<button mat-raised-button *ngIf="task.status !='RESOLVED' && task.status !='CLOSED'"
+        (click)="changeStatus('RESOLVED')">Resolved Task
+</button>
+<button mat-raised-button *ngIf="task.status =='CLOSED'" (click)="changeStatus('REOPEN')">Reopen Task</button>
+<button mat-raised-button *ngIf="task.status !='CLOSED'" (click)="changeStatus('CLOSED')">Close Task</button>

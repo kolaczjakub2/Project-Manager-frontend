@@ -1,0 +1,38 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" [(opened)]="opened" role="navigation">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/home" (click)="sidenav.close()">
+        <mat-icon>home</mat-icon>
+        <span class="nav-caption">Issues</span>
+      </a>
+      <a mat-list-item routerLink="/owner" (click)="sidenav.close()">
+        <mat-icon>assignment_ind</mat-icon>
+        <span class="nav-caption">Releases</span>
+      </a>
+      <a mat-list-item routerLink="#" (click)="sidenav.close()">
+        <mat-icon>account_balance</mat-icon>
+        <span class="nav-caption">Components</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content (click)="sidenav.toggle()"
+                       style="background: lightgray;text-align: center;position: relative; height:95vh;width: 2vw;display: flex;  ">
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/home" >
+        <mat-icon>home</mat-icon>
+      </a>
+      <a mat-list-item routerLink="/owner" >
+        <mat-icon>assignment_ind</mat-icon>
+      </a>
+      <a mat-list-item routerLink="#">
+        <mat-icon>account_balance</mat-icon>
+      </a>
+    </mat-nav-list>
+
+
+    <span class="material-icons"
+          style="font-size: 1.5vh;position: absolute;top: 50%;left: 50%; transform: translate(-50%, -50%); cursor:pointer;margin-top: auto">arrow_forward_ios</span>
+  </mat-sidenav-content>
+<router-outlet></router-outlet>
+</mat-sidenav-container>

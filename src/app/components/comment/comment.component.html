@@ -1,0 +1,23 @@
+<mat-card
+  style="border: 1px solid;  margin: 2%;   box-shadow: 5px 10px 8px #888888;">
+  <mat-card-title style="padding:1%;">{{getCommentCreator(comment.userId)}} -
+    <small>{{getCreatedDate(comment.createdDate)}}
+      <span *ngIf="comment.edited">(edited)</span></small>
+    <span class="material-icons" style="float:right; cursor: pointer" (click)="onEditMode()">create</span>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <p style="padding: 1% 1% 1% 5%;" *ngIf="contentMode=='LABEL'">
+      {{comment.content}}
+    </p>
+    <div *ngIf="contentMode=='TEXTAREA'">
+      <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Comment</mat-label>
+          <textarea matInput cdkTextareaAutosize formControlName="content"></textarea>
+        </mat-form-field>
+        <button mat-raised-button type="submit">Submit</button>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

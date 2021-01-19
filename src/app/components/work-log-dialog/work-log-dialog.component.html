@@ -1,0 +1,39 @@
+<div>
+  <h1 mat-dialog-title align="center">Log Time</h1>
+  <span *ngIf="task">{{task.key}}</span>
+  <form [formGroup]="formGroup">
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Comment</mat-label>
+      <textarea matInput formControlName="comment"></textarea>
+    </mat-form-field>
+
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Select Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>From</mat-label>
+      <input matInput formControlName="from" type="time"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>To</mat-label>
+      <input matInput formControlName="to" type="time"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Worked</mat-label>
+      <input matInput formControlName="worked"/>
+    </mat-form-field>
+
+    <mat-dialog-actions align="center">
+      <button mat-raised-button type="submit" [mat-dialog-close]="formGroup.value">Submit</button>
+      <button mat-button [mat-dialog-close]="null">Cancel</button>
+    </mat-dialog-actions>
+
+  </form>
+</div>

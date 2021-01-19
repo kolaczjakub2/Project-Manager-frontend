@@ -1,0 +1,37 @@
+mat-expansion-panel-header {
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-progress-bar {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.remaining ::ng-deep .mat-progress-bar-buffer {
+  background: orange;
+}
+
+.remaining ::ng-deep .mat-progress-bar-fill::after {
+  background-color: grey;
+}
+
+.logged::ng-deep .mat-progress-bar-fill::after {
+  background: green;
+}
+
+.redLogged::ng-deep .mat-progress-bar-fill::after {
+  background: red;
+}
+
+.logged ::ng-deep .mat-progress-bar-buffer {
+  background: grey;
+}
+

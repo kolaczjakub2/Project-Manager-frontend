@@ -6,8 +6,36 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/path/to/material-icons/iconfont/material-icons.css">
+  <style>
+    html, body {
+      min-height:100%;/* make sure it is at least as tall as the viewport */
+      position:relative;
+    }
+    .mat-card-header{
+      background-color:#3f51b5 !important;
+      color : white;
+      padding:5px !important;
+    }
+    .mat-expansion-panel{
+      width: 90% !important;
+      margin: 50px !important;
+    }
+    .mat-table{
+      width: 100%;
+    }
+    .mat-card{
+      padding:0 !important;
+    }
+
+    .mat-card-content{
+      padding:5px !important;
+    }
+  </style>
 </head>
-<body>
+<body class="mat-typography">
   <app-root></app-root>
 </body>
 </html>

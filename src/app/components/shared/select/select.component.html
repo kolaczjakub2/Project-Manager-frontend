@@ -1,0 +1,11 @@
+<div [formGroup]="form" *ngIf="controlName">
+  <mat-form-field appearance="fill">
+    <mat-label>{{placeholder}}</mat-label>
+    <mat-select [formControlName]="controlName" (click)="onClick()" (blur)="unBlur()" (selectionChange)="onChange()">
+      <mat-option *ngFor="let value of values" [value]="valueField ? value[valueField]: value ">
+        <div *ngIf="type==='user'; else classic" >{{value.firstName}} {{value.lastName}} ({{value.username}})</div>
+        <ng-template #classic>{{value}}</ng-template>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
