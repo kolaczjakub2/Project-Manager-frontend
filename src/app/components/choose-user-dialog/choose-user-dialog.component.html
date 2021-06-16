@@ -1,0 +1,22 @@
+<h1 mat-dialog-title align="center">Assign: </h1>
+
+<form [formGroup]="formGroup">
+  <mat-form-field appearance="fill">
+    <mat-label>Select a user</mat-label>
+    <input matInput
+           [matAutocomplete]="auto"
+           formControlName="user">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let item of filteredUsers | async" [value]="item">
+        {{displayFn(item)}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-dialog-actions align="center">
+    <button mat-raised-button type="submit" [mat-dialog-close]="formGroup.value.user">Submit</button>
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+  </mat-dialog-actions>
+</form>
+
+

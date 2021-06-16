@@ -11,6 +11,7 @@ export class WorkLogDialogComponent implements OnInit {
 
   task;
   formGroup;
+  public maskTime = [/[1-9]/, /\d/, ':', /\d/, /\d/];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data,
               private fb: FormBuilder) {

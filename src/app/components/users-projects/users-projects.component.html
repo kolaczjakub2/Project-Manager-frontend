@@ -1,14 +1,11 @@
-<mat-card style="width: 75%; margin: 50px">
+<mat-card style="width: 75%; margin: 50px" >
   <mat-card-header>Your projects</mat-card-header>
-
   <mat-card-content>
-    <mat-card *ngFor="let project of users" style="margin: 20px; background: lightgray">
-      <mat-card-content>
-        <p style="width: 100%;"><a style="color:blue"> {{project.Name}}</a> <span style="margin-left: 1vw">({{project.shortName}})</span></p>
-
-        <p style="margin-left:2vh"> Lead <span style="margin-left: 2vw;color:blue" [routerLink]="'/viewProfile'+project.Leader.id">{{project.Leader.name}}</span> </p>
-
+    <mat-card *ngFor="let project of projects" style="margin: 20px;background: #d3d3d3">
+      <mat-card-content [routerLink]="'/project/'+ project.code">
+        <p style="width: 100%;"><a style="color:blue"> {{project.name}}</a> <span style="margin-left: 1vw">({{project.code}})</span></p>
       </mat-card-content>
     </mat-card>
   </mat-card-content>
 </mat-card>
+

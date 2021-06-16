@@ -1,0 +1,14 @@
+<mat-card *ngIf="project$ | async; let project">
+  <mat-card-content>
+    <p style="width: 100%;"><a style="color:blue"> {{project.name}}</a> <span style="margin-left: 1vw">({{project.code}})</span></p>
+    <p style="margin-left:2vw"> Lead <span style="margin-left: 2vw;color:blue" [routerLink]="'/viewProfile/'+project.leader.id">{{project.leader.firstName}} {{project.leader.lastName}}</span> </p>
+    <p style="margin-left:4vw"> {{project.description}}</p>
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card >
+  <app-list [data]="projectTasks$|async" [displayedColumns]="displayedColumns"></app-list>
+</mat-card>
+
+

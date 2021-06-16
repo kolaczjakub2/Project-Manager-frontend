@@ -1,6 +1,6 @@
 <mat-card *ngIf="task" style="margin: 3%">
   <form [formGroup]="formGroup">
-    <h3>{{task.mainTaskKey}}</h3>/
+    <h3 *ngIf="task.mainTaskKey">{{task.mainTaskKey}} /</h3>
     <h3>{{task.key}}</h3>
     <h1 (dblclick)="onLabelClick('summary')"
         *ngIf="summary=='LABEL'">{{this.formGroup.get('summary').value}}</h1>
@@ -10,9 +10,10 @@
       <input matInput formControlName="summary" (blur)="onInputBlur('summary')">
     </mat-form-field>
 
-    <div class="row" style="margin-left: 5%">
+    <div class="row" style="margin-left: 5%;">
       <app-task-actions (commentClick)="onCommentClick()" [task]="this.task"
                         (logTimeSubmit)="logTimeSubmit($event)"
+                        style="width: 70vh;display: flex;justify-content: space-around"
                         (statusEmitter)="changeStatus($event)"></app-task-actions>
     </div>
     <div class="row">
@@ -51,6 +52,24 @@
 
           <app-select [form]="formGroup" [values]="users" [placeholder]="'Creator'"
                       [controlName]="'creatorId'" [valueField]="'id'" [type]="'user'"></app-select>
+
+
+          <mat-chip-list>
+            Voters:
+            <mat-chip (click)="showVoters()">
+              {{task.voters}}
+            </mat-chip>
+            <mat-icon (click)="vote()" style="cursor: pointer"
+                      matTooltip="Vote">thumb_up</mat-icon>
+          </mat-chip-list>
+          <mat-chip-list>
+            Watchers:
+            <mat-chip (click)="showWatchers()">
+              {{task.watchers}}
+            </mat-chip>
+            <mat-icon (click)="watchTask()" style="cursor: pointer"
+                      matTooltip="Watch Task">visibility</mat-icon>
+          </mat-chip-list>
         </mat-expansion-panel>
       </div>
     </div>
@@ -85,7 +104,6 @@
           </section>
           <mat-label>Estimated time:</mat-label>
           {{task.estimatedTime}}
-          <mat-progress-bar [value]="estimatedTime"></mat-progress-bar>
 
           <div>
             <mat-label>Logged time:</mat-label>
@@ -98,11 +116,7 @@
       </div>
     </div>
 
-
-
-          <app-sub-task-view [task]="task" [users]="users"></app-sub-task-view>
-
-
+    <app-sub-task-view [task]="task" [users]="users"></app-sub-task-view>
 
     <div class="col-sm">
       <mat-expansion-panel [expanded]="true">

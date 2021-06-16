@@ -7,6 +7,7 @@ import {UserService} from '../../services/user.service';
 import {ReleaseService} from '../../services/release.service';
 import {TaskService} from '../../services/task.service';
 import {ConvertToSubTaskDialogComponent} from '../convert-to-sub-task-dialog/convert-to-sub-task-dialog.component';
+import {ChooseUserDialogComponent} from "../choose-user-dialog/choose-user-dialog.component";
 
 @Component({
   selector: 'app-task-actions',
@@ -32,12 +33,11 @@ export class TaskActionsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onCommentClick() {
+  onCommentClick(): any {
     this.commentClick.emit();
   }
 
-  logWork() {
-
+  logWork(): any {
     this.dialogRef = this.dialog.open(WorkLogDialogComponent, {
       height: '60%',
       width: '50%',
@@ -48,11 +48,12 @@ export class TaskActionsComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe(value => {
         this.logTimeSubmit.emit(value);
+
       }
     );
   }
 
-  changeStatus(status) {
+  changeStatus(status): any {
     this.statusEmitter.emit(status);
   }
 
@@ -98,11 +99,61 @@ export class TaskActionsComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe(value => {
         if (value) {
-          this.taskService.convertToSubTask(value,this.task.key).subscribe(() => {
+          this.taskService.convertToSubTask(value, this.task.key).subscribe(() => {
             this.taskService.onAddTask.emit();
           });
         }
       }
     );
   }
+
+  async onAssignClick() {
+    const users = await this.userService.getAllUsers().toPromise();
+    this.dialogRef = this.dialog.open(ChooseUserDialogComponent, {
+      height: '60%',
+      width: '50%',
+      data: {
+        users: users,
+        assigneeId: this.task.assigneeId
+      }
+    });
+
+    this.dialogRef.afterClosed().subscribe(user => {
+        if (user) {
+          this.taskService.updateTask('assigneeId', user.id, this.task.key).subscribe(() => {
+            this.taskService.onAddTask.emit();
+          });
+        }
+      }
+    );
+  }
+
+  async vote() {
+    const context = await this.userService.getContext().toPromise();
+    this.taskService.voteForTask(context, this.task.key).subscribe(() => {
+      this.taskService.onAddTask.emit();
+    });
+  }
+
+
+  async linkTask() {
+    const tasks = await this.taskService.getAllTasks(this.task.projectId).toPromise();
+    this.dialogRef = this.dialog.open(ConvertToSubTaskDialogComponent, {
+      height: '60%',
+      width: '50%',
+      data: {
+        tasks
+      }
+    });
+
+    this.dialogRef.afterClosed().subscribe(value => {
+        if (value) {
+          this.taskService.linkTask(value, this.task.key).subscribe(() => {
+            this.taskService.onAddTask.emit();
+          });
+        }
+      }
+    );
+  }
+
 }

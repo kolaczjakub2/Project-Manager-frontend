@@ -1,22 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ProjectService} from '../../services/project.service';
 
-export interface UserData {
-  shortName: string;
-  Name: string;
-  Leader;
-  P: string;
+class SimpleUser {
+  id: string;
+  firstName: string;
+  lastName: string;
 }
 
-/** Constants used to fill up our data base. */
-const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
-
+class Project {
+  code: string;
+  name: string;
+  leader: SimpleUser;
+  description: string;
+}
 
 @Component({
   selector: 'app-users-projects',
@@ -24,31 +20,17 @@ const NAMES: string[] = [
   styleUrls: ['./users-projects.component.css']
 })
 export class UsersProjectsComponent implements OnInit {
+  projects: Project[];
 
-  users;
-  constructor() {
-    // Create 100 users
-    this.users  = Array.from({length: 5}, (_, k) => createNewUser(k + 1));
 
+  constructor(private projectService: ProjectService) {
   }
 
   ngOnInit(): void {
+    this.projectService.getAllProjects().subscribe(value => this.projects = value);
   }
 
 
-}
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    shortName: id.toString(),
-    Name: name,
-    Leader: {name, id},
-    P: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
 }
 
 

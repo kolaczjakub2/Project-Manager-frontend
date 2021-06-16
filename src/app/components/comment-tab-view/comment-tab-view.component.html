@@ -2,10 +2,10 @@
   <app-comment *ngFor="let comment of comments" [comment]="comment" [users]="users"
                (commentUpdate)="commentUpdate($event)"></app-comment>
   <form [formGroup]="commentFormGroup" (ngSubmit)="commentSubmit()">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" style="width: 100%">
       <mat-label>Comment</mat-label>
       <input #commentTextArea matInput formControlName="content"/>
     </mat-form-field>
-    <button mat-raised-button type="submit">Submit</button>
+    <button mat-raised-button type="submit" style="width: 15%">Submit</button>
   </form>
 </div>

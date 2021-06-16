@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 
 @Injectable({
@@ -16,7 +15,11 @@ export class ProjectService {
     return this.http.get(`${environment.apiUrl}/projects`);
   }
 
-  getAllTasks() {
+  getAllTasks(projectCode): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/projects/${projectCode}/tasks`);
+  }
 
+  getProject(projectCode: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/projects/${projectCode}`);
   }
 }

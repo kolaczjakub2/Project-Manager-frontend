@@ -10,13 +10,16 @@ import {MatSort} from '@angular/material/sort';
 })
 export class ListComponent implements AfterViewInit {
   @Output() onClick: EventEmitter<any> = new EventEmitter();
-  _dataSource:MatTableDataSource<any>;
+  _dataSource: MatTableDataSource<any>;
+
   get data() {
     return this._dataSource;
   }
-  @Input() set data(value:any) {
+
+  @Input() set data(value: any) {
     this._dataSource = new MatTableDataSource(value);
   }
+
   @Input() displayedColumns: string[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

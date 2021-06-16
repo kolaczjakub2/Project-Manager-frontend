@@ -27,6 +27,10 @@ import {WorkLogTabViewComponent} from './components/work-log-tab-view/work-log-t
 import {WorkLogComponent} from './components/work-log/work-log.component';
 import {SubTaskViewComponent} from './components/sub-task-view/sub-task-view.component';
 import {ConvertToSubTaskDialogComponent} from './components/convert-to-sub-task-dialog/convert-to-sub-task-dialog.component';
+import {TextMaskModule} from 'angular2-text-mask';
+import {ChooseUserDialogComponent} from './components/choose-user-dialog/choose-user-dialog.component';
+import { UserListDialogComponent } from './components/user-list-dialog/user-list-dialog.component';
+import { ProjectViewComponent } from './components/project-view/project-view.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,10 @@ import {ConvertToSubTaskDialogComponent} from './components/convert-to-sub-task-
     WorkLogTabViewComponent,
     WorkLogComponent,
     SubTaskViewComponent,
-    ConvertToSubTaskDialogComponent
+    ConvertToSubTaskDialogComponent,
+    ChooseUserDialogComponent,
+    UserListDialogComponent,
+    ProjectViewComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +65,7 @@ import {ConvertToSubTaskDialogComponent} from './components/convert-to-sub-task-
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule, CommonModule
+    FormsModule, CommonModule, TextMaskModule
   ],
   entryComponents: [CreateTaskDialogComponent, WorkLogDialogComponent, ConvertToSubTaskDialogComponent],
   providers: [],

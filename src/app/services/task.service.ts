@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 
@@ -29,6 +29,7 @@ export class TaskService {
   updateTask($event: string, value: any, key: any) {
     let object = {};
     object[$event] = value;
+    console.log(object);
     return this.http.patch(`${environment.apiUrl}/tasks/key/${key}`, object);
   }
 
@@ -66,6 +67,26 @@ export class TaskService {
 
   convertToSubTask(value, key) {
     return this.http.patch(`${environment.apiUrl}/tasks/key/${key}/mainTask`, value);
+  }
+
+  voteForTask(userId, key) {
+    return this.http.post(`${environment.apiUrl}/tasks/key/${key}/vote`, userId);
+  }
+
+  getVoters(key) {
+    return this.http.get(`${environment.apiUrl}/tasks/key/${key}/voters`);
+  }
+
+  getWatchers(key) {
+    return this.http.get(`${environment.apiUrl}/tasks/key/${key}/watchers`);
+  }
+
+  watchTask(userId: any, key) {
+    return this.http.post(`${environment.apiUrl}/tasks/key/${key}/watcher`, userId);
+  }
+
+  linkTask(value: any, key) {
+    return this.http.post(`${environment.apiUrl}/tasks/key/${key}/linkTask`, value);
   }
 }
 

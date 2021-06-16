@@ -4,6 +4,9 @@ import {ActivatedRoute} from '@angular/router';
 import {TaskService} from '../../services/task.service';
 import {UserService} from '../../services/user.service';
 import {Subject} from 'rxjs';
+import {ChooseUserDialogComponent} from "../choose-user-dialog/choose-user-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {UserListDialogComponent} from "../user-list-dialog/user-list-dialog.component";
 
 @Component({
   selector: 'app-task-view',
@@ -29,14 +32,19 @@ export class TaskViewComponent implements OnInit {
   estimatedTime;
   remainingTime;
   remainingTimeString: string;
+  dialogRef;
 
-  constructor(private fb: FormBuilder,
+  constructor(public dialog: MatDialog,
+              private fb: FormBuilder,
               private route: ActivatedRoute,
               private taskService: TaskService,
               private userService: UserService) {
     this.userService.getAllUsers().subscribe(
       value => this.users = value
     );
+    this.taskService.onAddTask.subscribe(() => {
+      this.getTask();
+    });
     this.getTask();
 
 
@@ -148,6 +156,7 @@ export class TaskViewComponent implements OnInit {
     $event['creatorId'] = localStorage.getItem('userId');
     this.taskService.logWork($event, this.taskKey).subscribe(() => {
       this.taskService.onAddLogWork.emit();
+      this.taskService.onAddTask.emit();
     });
   }
 
@@ -185,6 +194,42 @@ export class TaskViewComponent implements OnInit {
   changeStatus($event: any) {
     this.taskService.changeStatus($event, this.taskKey).subscribe(() => {
       this.getTask();
+    });
+  }
+
+  async showVoters() {
+    const users = await this.taskService.getVoters(this.task.key).toPromise();
+    this.dialogRef = this.dialog.open(UserListDialogComponent, {
+      height: '30%',
+      width: '50%',
+      data: {
+        users
+      }
+    });
+  }
+
+  async showWatchers() {
+    const users = await this.taskService.getWatchers(this.task.key).toPromise();
+    this.dialogRef = this.dialog.open(UserListDialogComponent, {
+      height: '30%',
+      width: '50%',
+      data: {
+        users
+      }
+    });
+  }
+
+  async watchTask() {
+    const context = await this.userService.getContext().toPromise();
+    this.taskService.watchTask(context, this.task.key).subscribe(() => {
+      this.taskService.onAddTask.emit();
+    });
+  }
+
+  async vote() {
+    const context = await this.userService.getContext().toPromise();
+    this.taskService.voteForTask(context, this.task.key).subscribe(() => {
+      this.taskService.onAddTask.emit();
     });
   }
 }
